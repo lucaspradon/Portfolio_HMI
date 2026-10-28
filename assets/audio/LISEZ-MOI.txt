@@ -1,0 +1,13 @@
+Fichiers audio du lecteur (facultatifs)
+
+Déposez ici des fichiers .mp3 avec exactement ces noms :
+  a7x.mp3      A Little Piece of Heaven — Avenged Sevenfold
+  pulsar.mp3   Pulsar — L'Impératrice
+  thrill.mp3   Thrill of the Arts — Vulfpeck
+  vibes1.mp3   Golden Hour
+  vibes2.mp3   Balloon Day
+  vibes3.mp3   Bubbles
+  vibes4.mp3   Night Drive
+
+Si un fichier manque, le lecteur simule la lecture sans son.
+Les noms et les titres se changent dans js/data.js (rubrique "tracks").

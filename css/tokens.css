@@ -1,0 +1,176 @@
+/* =========================================================
+   DESIGN TOKENS
+   Every value used by the interface lives here.
+   Source: Figma file "Portfolio_HMI" (only "standard element"
+   is a real Figma variable; the rest was measured on the layers).
+   ========================================================= */
+
+:root {
+  /* ---------- Colors : interface themes (Profile → "Interface colour") ---------- */
+  --theme-blue: #6592b6;     /* Figma variable "standard element" */
+  --theme-rust: #b24e2d;
+  --theme-purple: #8d458e;
+  --theme-olive: #ac992d;
+  --theme-green: #319240;
+
+  /* ---------- Colors : easy mode palette ("Summer Dream" in Figma) ---------- */
+  --easy-blue: #0081a7;
+  --easy-teal: #00afb9;
+  --easy-cream: #fdfcdc;
+  --easy-peach: #fed9b7;
+  --easy-coral: #f07167;
+  --easy-button: #01afb9;     /* "Activate" button */
+  --easy-text: #000000;
+
+  /* ---------- Colors : current theme ---------- */
+  --color-accent: var(--theme-blue);
+  --color-select: var(--color-accent);     /* selected tab / profile halo; coral in easy mode */
+  --color-accent-strong: color-mix(in srgb, #000 50%, var(--color-accent)); /* mic button */
+  --color-accent-soft: color-mix(in srgb, #fff 60%, var(--color-accent));   /* progress track */
+  --color-accent-faint: color-mix(in srgb, #fff 20%, var(--color-accent));  /* progress fill */
+
+  /* ---------- Colors : neutral ---------- */
+  --color-text: #ffffff;
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-surface-glass: rgba(0, 0, 0, 0.3);     /* cards, navbar, pills */
+  --color-surface-tile: rgba(255, 255, 255, 0.1); /* empty shortcut tile */
+  --color-surface-field: rgba(255, 255, 255, 0.3); /* search field */
+  --color-surface-pill: rgba(255, 255, 255, 0.2);  /* media sources */
+  --color-surface-panel: rgba(0, 0, 0, 0.4);      /* car info panel */
+  --color-surface-app: rgba(181, 193, 212, 0.25); /* app tile */
+  --color-border-app: rgba(255, 255, 255, 0.15);
+  --color-text-hint: rgba(255, 255, 255, 0.5);    /* placeholder, address */
+  --color-button-neutral: #3f3f3f;                /* "Cancel" */
+  --color-surface-banner: rgba(0, 0, 0, 0.6);     /* passenger suggestion on the center screen */
+  --color-header-glass: rgba(0, 0, 0, 0.01);
+  --color-shadow-header: rgba(0, 0, 0, 0.15);
+  --color-gauge-track: rgba(255, 255, 255, 0.4);
+  --color-screen-off: #000000;
+
+  /* ---------- Colors : cabin illustration ---------- */
+  --cabin-bg: #08090b;
+  --cabin-dash: #141619;
+  --cabin-dash-light: #23262b;
+  --cabin-trim: #9aa1a8;
+  --cabin-leather: #17181b;
+  --cabin-leather-light: #2b2d32;
+  --cabin-headliner: #8c8f93;
+  --cabin-bezel: #050506;
+
+  /* ---------- Colors : road scene ---------- */
+  --road-sky-top: #7f9bb5;
+  --road-sky-horizon: #d7dde2;
+  --road-ground: #56634e;
+  --road-verge: #6c7760;
+  --road-asphalt: #4a4d52;
+  --road-marking: #f2f2f2;
+
+  /* ---------- Colors : vector map ---------- */
+  --map-land: #e6e9ec;
+  --map-block: #e2e5e8;
+  --map-water: #a9d3f2;
+  --map-park: #cfe8c6;
+  --map-road: #ffffff;
+  --map-road-major: #fbd97a;
+  --map-road-major-edge: #e9bf55;
+  --map-label: #5f6368;
+  --map-pin: #e5483c;
+
+  /* ---------- Typography ---------- */
+  --font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --font-size-tiny: 16px;      /* passenger: artist under a mini cover */
+  --font-size-small: 18px;     /* passenger: track title under a mini cover */
+  --font-size-caption: 20px;   /* shortcut labels */
+  --font-size-app-label: 22px; /* app names */
+  --font-size-body: 24px;      /* artist, timestamps */
+  --font-size-title: 32px;     /* card titles, track title */
+  --font-size-header: 40px;    /* date & time */
+  --font-size-cluster-unit: 36px;
+  --font-size-cluster-gear: 48px;
+  --font-size-cluster-speed: 160px;
+  --font-size-start: 56px;     /* START button of the welcome sequence */
+  --font-size-display: 72px;   /* passenger: arrival time */
+
+  /* ---------- Spacing ---------- */
+  --space-3xs: 5px;
+  --space-2xs: 10px;
+  --space-app: 16px;           /* gap between app tiles */
+  --space-xs: 20px;
+  --space-s: 23px;
+  --space-m: 30px;
+  --space-l: 40px;
+  --space-xl: 43px;
+  --space-2xl: 60px;
+
+  /* ---------- Radii ---------- */
+  --radius-easy-button: 3px;
+  --radius-tile: 5px;
+  --radius-dialog-button: 6px;
+  --radius-app: 3px;
+  --radius-album: 10px;
+  --radius-button: 10px;
+  --radius-easy-card: 15px;
+  --radius-card: 19px;
+  --radius-easy-panel: 20px;
+  --radius-progress: 21px;
+  --radius-select: 25px;
+  --radius-navbar: 36px;
+  --radius-gauge: 39px;
+  --radius-field: 39px;
+  --radius-round: 62px;
+  --radius-pill: 64px;
+  --radius-cluster: 288px;
+  --radius-screen: 28px;
+
+  /* ---------- Effects ---------- */
+  --blur-glass: 56px;
+  --blur-header: 14px;
+  --shadow-header: 0 4px 37.5px 0 var(--color-shadow-header);
+  --shadow-app-icon: 0 3px 3px 0 rgba(0, 0, 0, 0.7);
+  --blur-app: 6px;
+  --opacity-backdrop-art: 0.4;  /* cover behind the Media screen */
+
+  /* ---------- Sizes (Figma, at 1:1) ---------- */
+  --size-icon-s: 40px;
+  --size-icon: 68px;
+  --size-app-icon: 60px;
+  --size-star: 32px;
+  --size-select: 90px;
+  --size-round-button: 113px;
+  --size-navbar-w: 700px;
+  --size-navbar-h: 109px;
+
+  /* ---------- Portfolio controls (real size, outside the car) ---------- */
+  --ui-gutter: 16px;
+  --ui-font-size: 13px;
+  --ui-surface: rgba(20, 22, 26, 0.7);
+  --ui-border: rgba(255, 255, 255, 0.12);
+  --ui-note: #ffd166;            /* design notes: stands apart from the car's interface */
+  --ui-note-text: #1a1a1a;
+  --ui-card: rgba(18, 20, 24, 0.92);
+  --ui-font-size-title: 16px;
+  --ui-font-size-text: 14px;
+
+  /* ---------- Motion ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 160ms;
+  --duration-base: 320ms;
+  --duration-slow: 600ms;
+}
+
+/* ---------- Theme switch: set on <html data-theme="…"> by js/profile.js ---------- */
+[data-theme="blue"]   { --color-accent: var(--theme-blue); }
+[data-theme="rust"]   { --color-accent: var(--theme-rust); }
+[data-theme="purple"] { --color-accent: var(--theme-purple); }
+[data-theme="olive"]  { --color-accent: var(--theme-olive); }
+[data-theme="green"]  { --color-accent: var(--theme-green); }
+
+/* ---------- Easy mode: set on <html data-easy="true"> ---------- */
+[data-easy="true"] {
+  --color-select: var(--easy-coral);
+}

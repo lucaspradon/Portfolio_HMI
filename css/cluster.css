@@ -1,0 +1,213 @@
+/* =========================================================
+   CLUSTER (Figma "Ecran planche de bord", 1092 × 401)
+   ========================================================= */
+
+.cluster__wallpaper {
+  position: absolute;
+  left: -94px;
+  top: -66px;
+  width: 1280px;
+  height: 534px;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ---------- Speed ---------- */
+
+.cluster__speed {
+  position: absolute;
+  left: 120px;
+  top: 88px;
+  width: 262px;
+  height: 225px;
+  line-height: normal;
+}
+
+.cluster__speed-value {
+  position: absolute;
+  inset: 0 0 13.33% 0;
+  text-align: center;
+  font-size: var(--font-size-cluster-speed);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.cluster__speed-unit {
+  position: absolute;
+  left: 63.36%;
+  top: 80.44%;
+  font-size: var(--font-size-cluster-unit);
+  font-weight: var(--font-weight-regular);
+  white-space: nowrap;
+}
+
+/* ---------- Gear (Figma "rapport") ---------- */
+
+.cluster__gear {
+  position: absolute;
+  left: 529px;
+  top: 152px;
+  width: 132px;
+  height: 97px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-glass);
+  font-size: var(--font-size-cluster-gear);
+  font-weight: var(--font-weight-regular);
+}
+
+/* ---------- Guidance and track (aligned on the gear pill, x = 595) ---------- */
+
+.cluster__guidance,
+.cluster__track {
+  position: absolute;
+  left: 595px;
+  display: flex;
+  align-items: center;
+  transform: translateX(-50%);
+  line-height: normal;
+  white-space: nowrap;
+  transition: opacity var(--duration-slow) var(--ease-standard),
+              transform var(--duration-slow) var(--ease-standard);
+}
+
+.cluster__guidance {
+  top: 26px;
+  gap: 14px;
+  padding: 8px 26px 8px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-glass);
+  opacity: 0;
+  transform: translate(-50%, -12px);
+}
+
+.cluster__guidance.is-visible {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.cluster__turn {
+  width: 60px;
+  height: 60px;
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-text);
+}
+
+.cluster__turn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cluster__distance {
+  font-size: var(--font-size-cluster-unit);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.cluster__street {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+.cluster__track {
+  top: 270px;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.cluster__track.is-paused {
+  opacity: 0.5;
+}
+
+/* a short "pop" when the track changes */
+.cluster__track.is-new {
+  animation: cluster-track-pop var(--duration-slow) var(--ease-standard);
+}
+
+@keyframes cluster-track-pop {
+  0%   { transform: translateX(-50%) scale(1); }
+  40%  { transform: translateX(-50%) scale(1.08); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.cluster__track-cover {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: var(--radius-tile);
+  object-fit: cover;
+}
+
+.cluster__track-text {
+  min-width: 0;
+}
+
+.cluster__track-title,
+.cluster__track-artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cluster__track-title {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cluster__track-artist {
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Energy (Figma "Energie") ---------- */
+
+.cluster__energy {
+  position: absolute;
+  left: 824px;
+  top: 157px;
+  display: flex;
+  gap: 24px;
+  line-height: normal;
+}
+
+.gauge {
+  position: relative;
+  width: 13px;
+  height: 81px;
+  border-radius: var(--radius-gauge);
+  background: var(--color-gauge-track);
+  overflow: hidden;
+}
+
+.gauge__fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 78%;
+  border-radius: var(--radius-gauge);
+  background: var(--color-text);
+  transition: height var(--duration-slow) var(--ease-standard);
+}
+
+.cluster__energy-text small {
+  font-size: var(--font-size-body);
+}
+
+.cluster__battery {
+  font-size: var(--font-size-cluster-unit);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cluster__battery small {
+  font-weight: var(--font-weight-semibold);
+}
+
+.cluster__range {
+  font-size: var(--font-size-cluster-unit);
+  font-weight: var(--font-weight-regular);
+}

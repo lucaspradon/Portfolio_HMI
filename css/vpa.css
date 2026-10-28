@@ -1,0 +1,109 @@
+/* =========================================================
+   VPA — appearance (see js/vpa.js)
+   A placeholder abstract orb. Replace this file (and markup()
+   in js/vpa.js) with the final VPA design.
+   States: .vpa[data-state="idle|listening|thinking|speaking"]
+   --vpa-level (0 → 1) is the simulated voice loudness.
+   ========================================================= */
+
+.vpa {
+  --vpa-size: 160px;
+  --vpa-level: 0;
+  position: relative;
+  width: var(--vpa-size);
+  height: var(--vpa-size);
+  flex: none;
+}
+
+.vpa__glow,
+.vpa__orb,
+.vpa__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.vpa__glow {
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  opacity: 0.35;
+  filter: blur(20px);
+  transform: scale(calc(1.1 + var(--vpa-level) * 0.5));
+  transition: transform 120ms linear, opacity var(--duration-base) var(--ease-standard);
+}
+
+.vpa__orb {
+  overflow: hidden;
+  background: var(--color-accent);
+  transform: scale(calc(0.78 + var(--vpa-level) * 0.22));
+  transition: transform 120ms linear;
+}
+
+.vpa__blob {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+.vpa__blob--1 { left: -5%;  top: 0;    background: var(--easy-teal);  animation: vpa-drift 7s ease-in-out infinite; }
+.vpa__blob--2 { right: -5%; top: 10%;  background: var(--easy-coral); animation: vpa-drift 9s ease-in-out infinite reverse; }
+.vpa__blob--3 { left: 20%;  bottom: -10%; background: var(--easy-cream); opacity: 0.7; animation: vpa-drift 11s ease-in-out infinite; }
+
+@keyframes vpa-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(18%, 12%) scale(1.15); }
+  66%      { transform: translate(-12%, 16%) scale(0.9); }
+}
+
+.vpa__ring {
+  border: 3px solid transparent;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* ---------- idle: small and breathing ---------- */
+.vpa[data-state="idle"] .vpa__orb {
+  animation: vpa-breathe 4s ease-in-out infinite;
+}
+
+@keyframes vpa-breathe {
+  50% { transform: scale(0.84); }
+}
+
+/* ---------- listening: reacts to the voice level ---------- */
+.vpa[data-state="listening"] .vpa__glow {
+  opacity: 0.6;
+}
+
+.vpa[data-state="listening"] .vpa__ring {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(calc(1 + var(--vpa-level) * 0.12));
+  transition: transform 120ms linear, opacity var(--duration-base) var(--ease-standard);
+}
+
+/* ---------- thinking: spinning ---------- */
+.vpa[data-state="thinking"] .vpa__orb {
+  transform: scale(0.8);
+}
+
+.vpa[data-state="thinking"] .vpa__ring {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.9) transparent rgba(255, 255, 255, 0.3) transparent;
+  animation: vpa-spin 0.9s linear infinite;
+}
+
+.vpa[data-state="thinking"] .vpa__blob {
+  animation-duration: 1.6s;
+}
+
+@keyframes vpa-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- speaking: pulses with the words ---------- */
+.vpa[data-state="speaking"] .vpa__glow {
+  opacity: 0.8;
+}

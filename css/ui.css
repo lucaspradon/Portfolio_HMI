@@ -1,0 +1,55 @@
+/* =========================================================
+   PORTFOLIO CONTROLS
+   Everything that is NOT part of the car: shown at real
+   size (not scaled with the cabin), kept discreet.
+   ========================================================= */
+
+.toolbar {
+  position: fixed;
+  left: var(--ui-gutter);
+  bottom: var(--ui-gutter);
+  z-index: 10;
+  display: flex;
+  gap: var(--space-2xs);
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+/* hidden while the car is asleep (welcome sequence) */
+body:not(.is-started) .toolbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toolbar__button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px 0 8px;
+  border-radius: var(--radius-pill);
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  color: var(--color-text-muted);
+  font-size: var(--ui-font-size);
+  font-weight: var(--font-weight-medium);
+  backdrop-filter: blur(var(--blur-header));
+  -webkit-backdrop-filter: blur(var(--blur-header));
+  transition: color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.toolbar__button:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-hint);
+}
+
+.toolbar__hint {
+  align-self: center;
+  font-size: var(--ui-font-size);
+  color: var(--color-text-hint);
+}
+
+.toolbar__button img {
+  width: 18px;
+  height: 18px;
+}

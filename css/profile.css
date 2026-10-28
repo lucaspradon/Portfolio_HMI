@@ -1,0 +1,277 @@
+/* =========================================================
+   PROFILE (Figma "ecran profil" + "picselect")
+   Positions are the Figma ones, measured inside the
+   1200 × 780 content area.
+   ========================================================= */
+
+.profile__title {
+  position: absolute;
+  left: var(--space-m);
+  top: var(--space-m);
+}
+
+.profile__panel {
+  position: absolute;
+  left: 50px;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+}
+
+.profile__panel[hidden] {
+  display: none;
+}
+
+.profile__heading {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;
+}
+
+/* ---------- Interface colour ---------- */
+
+.swatches {
+  display: flex;
+  gap: var(--space-l);
+  margin: var(--space-xs) 0 32px;
+}
+
+.swatch {
+  width: var(--size-round-button);
+  height: var(--size-round-button);
+  border-radius: 50%;
+  transition: transform var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.swatch:active {
+  transform: scale(0.94);
+}
+
+.swatch.is-selected {
+  box-shadow: 0 0 0 6px var(--color-surface-glass), 0 0 0 10px var(--color-text);
+}
+
+.swatch--blue   { background: var(--theme-blue); }
+.swatch--rust   { background: var(--theme-rust); }
+.swatch--purple { background: var(--theme-purple); }
+.swatch--olive  { background: var(--theme-olive); }
+.swatch--green  { background: var(--theme-green); }
+
+/* ---------- Wallpaper ---------- */
+
+.wallpaper-picker {
+  display: flex;
+  gap: var(--space-xs);
+  margin: var(--space-xs) 0 34px;
+}
+
+.wallpaper-choice {
+  width: 200px;
+  height: 140px;
+  border-radius: var(--radius-album);
+  overflow: hidden;
+  outline: 4px solid transparent;
+  outline-offset: 4px;
+  transition: outline-color var(--duration-base) var(--ease-standard);
+}
+
+.wallpaper-choice.is-selected {
+  outline-color: var(--color-accent);
+}
+
+.wallpaper-choice img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Simplified mode ---------- */
+
+.easy-promo {
+  display: flex;
+  gap: 35px;
+  margin-top: var(--space-xs);
+}
+
+.easy-promo__body {
+  width: 555px;
+  display: flex;
+  flex-direction: column;
+}
+
+.easy-promo__text {
+  font-size: var(--font-size-body);
+  line-height: 1.2;
+}
+
+.easy-promo__button {
+  align-self: center;
+  width: 256px;
+  height: 59px;
+  margin-top: 36px;
+  border-radius: var(--radius-easy-button);
+  background: var(--easy-button);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-medium);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.easy-promo__button:active {
+  transform: scale(0.97);
+}
+
+.easy-promo__preview {
+  width: 177px;
+  height: 154px;
+  border-radius: var(--radius-album);
+  object-fit: cover;
+}
+
+/* ---------- Profile picture ---------- */
+
+.profile__identity {
+  position: absolute;
+  left: 866px;
+  top: 75px;
+  width: 259px;
+}
+
+.avatar-ring {
+  position: relative;
+  width: 259px;
+  height: 259px;
+  padding: 6px;
+  border: 5px solid var(--color-accent);
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--color-surface-glass);
+}
+
+.avatar__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar__icon {
+  width: 140px;
+  height: 140px;
+}
+
+.avatar__edit {
+  position: absolute;
+  left: 196px;
+  top: 196px;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.avatar__edit img {
+  width: var(--size-icon);
+  height: var(--size-icon);
+}
+
+.profile__name {
+  margin-top: var(--space-xs);
+  text-align: center;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Picture picker ---------- */
+
+.avatar-picker {
+  display: grid;
+  grid-template-columns: repeat(5, var(--size-round-button));
+  grid-auto-rows: var(--size-round-button);
+  gap: var(--space-l);
+  margin-top: var(--space-xs);
+}
+
+.avatar-choice {
+  border-radius: 50%;
+  overflow: hidden;
+  outline: 5px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color var(--duration-base) var(--ease-standard);
+}
+
+.avatar-choice.is-selected {
+  outline-color: var(--color-accent);
+}
+
+.avatar-choice img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-choice--add {
+  display: grid;
+  place-items: center;
+  background: var(--color-surface-field);
+}
+
+.avatar-choice--add img {
+  width: 50px;
+  height: 50px;
+}
+
+.profile__actions {
+  position: absolute;
+  left: -50px;
+  right: 0;
+  bottom: var(--space-l);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-l);
+}
+
+.dialog-button {
+  width: 261px;
+  height: 69px;
+  border-radius: var(--radius-dialog-button);
+  font-size: var(--font-size-body);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.dialog-button:active {
+  transform: scale(0.97);
+}
+
+.dialog-button--neutral {
+  background: var(--color-button-neutral);
+  font-weight: var(--font-weight-light);
+}
+
+.dialog-button--primary {
+  background: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Profile button of the dock ---------- */
+
+.round-button__avatar,
+.round-button__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.round-button__photo {
+  border-radius: 50%;
+  object-fit: cover;
+}

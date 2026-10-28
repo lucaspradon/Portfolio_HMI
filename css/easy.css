@@ -1,0 +1,382 @@
+/* =========================================================
+   SIMPLIFIED (EASY) MODE — active when <html data-easy="true">
+   Palette "Summer Dream" from Figma: teal, cream, peach, coral.
+   Positions are the Figma ones, measured inside the
+   1200 × 780 content area (screen minus 40 px left, 149 px top).
+   ========================================================= */
+
+/* ---------- Flat teal background on every screen ---------- */
+
+.screen__easy-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--easy-teal);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+[data-easy="true"] .screen__easy-bg {
+  opacity: 1;
+}
+
+/* ---------- Navigation: three big tabs instead of the bar ---------- */
+
+.navbar-easy {
+  position: absolute;
+  left: 428px;   /* 478 px in Figma, minus the dock's 50 px offset */
+  top: 34px;
+  display: flex;
+}
+
+.navbar,
+.navbar-easy {
+  transition: opacity var(--duration-base) var(--ease-standard),
+              visibility 0s linear var(--duration-base);
+}
+
+[data-easy="false"] .navbar-easy,
+[data-easy="true"] .navbar {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.navbar-easy__item {
+  width: 108px;
+  height: var(--size-navbar-h);
+  padding-top: var(--space-xs);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 54px 54px 0 0;
+  transition: background var(--duration-base) var(--ease-standard);
+}
+
+.navbar-easy__item.is-active {
+  background: var(--color-select);
+}
+
+.navbar-easy__item img {
+  width: var(--size-icon);
+  height: var(--size-icon);
+}
+
+/* the profile button gets a halo when its screen is open (coral in easy mode) */
+.round-button--profile.is-active {
+  box-shadow: 0 0 0 11px var(--color-select);
+}
+
+/* ---------- Home ---------- */
+
+.easy-blob {
+  position: absolute;
+  left: -40px;
+  top: -149px;
+  width: 1280px;
+  height: 1125px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.easy-map {
+  position: absolute;
+  left: 40px;
+  top: 1px;
+  width: 450px;
+  height: 450px;
+  overflow: hidden;
+  border: 10px solid var(--easy-peach);
+  border-radius: var(--radius-easy-panel);
+}
+
+.easy-map svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.easy-shortcuts {
+  position: absolute;
+  left: 540px;
+  top: 11px;
+  display: flex;
+  gap: 32px;
+}
+
+.easy-shortcut {
+  position: relative;
+  width: 182px;
+  height: 181px;
+  overflow: hidden;
+  border-radius: var(--radius-album);
+  background-color: var(--color-surface-tile);
+  background-size: cover;
+  background-position: center;
+  text-align: left;
+}
+
+.easy-shortcut::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 56px;
+  background: linear-gradient(to bottom, #000, rgba(0, 0, 0, 0));
+}
+
+.easy-shortcut .shortcut__label {
+  font-size: var(--font-size-body);
+}
+
+.easy-shortcut--add {
+  display: grid;
+  place-items: center;
+}
+
+.easy-shortcut--add::before {
+  display: none;
+}
+
+.easy-shortcut--add img {
+  width: 70px;
+  height: 70px;
+  opacity: 0.5;
+}
+
+/* ---------- Player (cream) ---------- */
+
+.easy-player {
+  position: absolute;
+  left: 40px;
+  top: 487px;
+  width: 1120px;
+  height: 306px;
+  padding: var(--space-2xs);
+  border-radius: var(--radius-easy-panel);
+  background: var(--easy-peach);
+}
+
+.player--easy {
+  display: grid;
+  grid-template-columns: 285px 1fr;
+  gap: var(--space-2xs);
+  height: 100%;
+  padding: 0;
+  color: var(--easy-text);
+}
+
+.player--easy .player__album {
+  width: 285px;
+  height: 286px;
+}
+
+.player--easy .player__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 26px var(--space-l) 0;
+  border-radius: var(--radius-album);
+  background: var(--easy-cream);
+  line-height: normal;
+}
+
+.player--easy .player__title {
+  margin-left: calc(var(--space-2xs) * -1);
+}
+
+.player--easy .player__artist {
+  margin: var(--space-2xs) 0 0 calc(var(--space-2xs) * -1);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.player--easy .progress {
+  margin-top: var(--space-l);
+}
+
+.player--easy .progress__track {
+  height: 11px;
+}
+
+.player--easy .progress__track::before,
+.player--easy .progress__fill {
+  top: 0;
+  height: 11px;
+  border-radius: 6px;
+}
+
+.player--easy .progress__track::before {
+  background: var(--easy-peach);
+}
+
+.player--easy .progress__fill,
+.player--easy .progress__knob {
+  background: var(--easy-coral);
+}
+
+.player--easy .progress__knob {
+  top: -15.5px;
+  width: 42px;
+  height: 42px;
+  margin-left: -21px;
+}
+
+.player--easy .progress__times {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-caption);
+}
+
+.player--easy .player__controls {
+  align-self: center;
+  margin-top: -6px;
+  gap: 42px;
+}
+
+.easy-icon {
+  display: block;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  color: var(--easy-coral);
+}
+
+.easy-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Car ---------- */
+
+.car-easy {
+  position: absolute;
+  inset: 0;
+}
+
+.car-easy__floor {
+  position: absolute;
+  left: 246px;
+  top: 280px;
+  width: 750px;
+  height: 302px;
+  border-radius: 50%;
+  background: var(--easy-coral);
+}
+
+.car-easy__outline {
+  position: absolute;
+  left: -40px;
+  top: -149px;
+  width: 1280px;
+  height: 1125px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.car-easy__car {
+  position: absolute;
+  left: 335px;
+  top: 73px;
+  width: 529px;
+  height: 529px;
+  pointer-events: none;
+}
+
+.car-spot {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  animation: spot-pulse 2.4s var(--ease-standard) infinite;
+}
+
+.car-spot::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: var(--color-text);
+}
+
+.car-spot.is-open {
+  animation: none;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+@keyframes spot-pulse {
+  50% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.15); }
+}
+
+.car-spot__bubble {
+  position: absolute;
+  left: 50%;
+  bottom: 78px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 26px;
+  border-radius: var(--radius-easy-card);
+  background: var(--easy-cream);
+  color: var(--easy-text);
+  font-size: var(--font-size-body);
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.car-spot__bubble strong {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--easy-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.car-spot__action {
+  margin-top: 6px;
+  padding: 8px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--easy-coral);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------- Apps: favourites only, big tiles ---------- */
+
+.easy-apps {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-l);
+}
+
+.easy-app {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-easy-panel);
+  background: var(--easy-cream);
+  color: var(--easy-text);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.easy-app:active {
+  transform: scale(0.96);
+}
+
+.easy-app img {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-easy-panel);
+  object-fit: cover;
+  box-shadow: var(--shadow-app-icon);
+}

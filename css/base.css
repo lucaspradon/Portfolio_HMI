@@ -1,0 +1,208 @@
+/* =========================================================
+   BASE — reset, page, stage and screen placement
+   The whole cabin is drawn at a fixed size (4400 × 2100)
+   and js/scale.js shrinks it to fit the window.
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cabin-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+/* ---------- Viewport & stage ---------- */
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4400px;
+  height: 2100px;
+  transform-origin: 0 0;
+  /* position and scale are set by js/scale.js */
+  transform: scale(0.4);
+}
+
+/* in portrait, moving from one screen to another is a smooth camera move */
+.is-portrait .stage {
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+
+/* ---------- Screens ---------- */
+
+.screen {
+  position: absolute;
+  overflow: hidden;
+  background: var(--color-screen-off);
+}
+
+.screen--cluster {
+  left: 380px;
+  top: 640px;
+  width: 1092px;
+  height: 401px;
+  border-radius: var(--radius-cluster);
+}
+
+.screen--center {
+  left: 1900px;
+  top: 600px;
+  width: 1280px;
+  height: 1125px;
+  border-radius: var(--radius-screen);
+  box-shadow: 0 0 0 14px var(--cabin-bezel), 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+
+.screen--passenger {
+  left: 3330px;
+  top: 700px;
+  width: 1000px;
+  height: 560px;
+  border-radius: var(--radius-screen);
+  box-shadow: 0 0 0 14px var(--cabin-bezel), 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+
+.screen__wallpaper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ---------- Welcome sequence (Figma "WS") ----------
+   Black screens with a slow blend of colours, until START. */
+
+.welcome {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  background: var(--color-screen-off);
+  transition: opacity 1.2s var(--ease-standard), visibility 0s linear 1.2s;
+}
+
+.is-started .welcome {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.welcome__blend {
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 30% 35%, var(--color-accent) 0, transparent 35%),
+    radial-gradient(circle at 70% 60%, var(--easy-coral) 0, transparent 30%),
+    radial-gradient(circle at 45% 75%, var(--easy-teal) 0, transparent 30%),
+    radial-gradient(circle at 75% 25%, var(--theme-purple) 0, transparent 30%);
+  filter: blur(60px);
+  opacity: 0.55;
+  animation: welcome-blend 14s ease-in-out infinite alternate;
+}
+
+@keyframes welcome-blend {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(120deg) scale(1.15); }
+  100% { transform: rotate(240deg) scale(1); }
+}
+
+.welcome__start {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 28px 90px;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: var(--font-size-start);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.12em;
+  animation: welcome-pulse 2.4s var(--ease-standard) infinite;
+}
+
+@keyframes welcome-pulse {
+  50% { box-shadow: 0 0 0 18px rgba(255, 255, 255, 0.08), 0 0 60px rgba(255, 255, 255, 0.25); }
+}
+
+/* ---------- Shared building blocks ---------- */
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+}
+
+.card__title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-light);
+}
+
+.icon-button {
+  width: var(--size-icon);
+  height: var(--size-icon);
+  flex: none;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.icon-button:active {
+  transform: scale(0.9);
+}
+
+.icon-button img {
+  width: 100%;
+  height: 100%;
+}
+
+.is-loading *,
+.is-loading *::before,
+.is-loading *::after {
+  transition: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent-soft);
+  outline-offset: 4px;
+}

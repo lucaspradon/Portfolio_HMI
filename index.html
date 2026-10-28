@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="blue" data-easy="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090b">
+  <title>In-Car HMI Prototype — Lucas Pradon</title>
+  <meta name="description" content="Interactive in-car HMI prototype: cluster, center touchscreen and passenger screen.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cabin.css">
+  <link rel="stylesheet" href="css/cluster.css">
+  <link rel="stylesheet" href="css/center.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="css/easy.css">
+  <link rel="stylesheet" href="css/passenger.css">
+  <link rel="stylesheet" href="css/vpa.css">
+  <link rel="stylesheet" href="css/ui.css">
+  <link rel="stylesheet" href="css/notes.css">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+
+<div class="viewport" id="viewport">
+  <div class="stage" id="stage">
+
+    <!-- Cabin illustration (behind the screens), drawn by js/cabin.js -->
+    <div class="cabin cabin--back" id="cabin-back"></div>
+
+    <!-- ================= CLUSTER (behind the steering wheel) ================= -->
+    <div class="screen screen--cluster" id="cluster">
+      <img class="cluster__wallpaper" data-wallpaper="cluster" src="assets/images/wallpapers/cluster-default.jpg" alt="">
+      <div class="screen__easy-bg"></div>
+
+      <div class="cluster__speed">
+        <span class="cluster__speed-value" id="cluster-speed">0</span>
+        <span class="cluster__speed-unit" data-i18n="cluster.speedUnit"></span>
+      </div>
+
+      <div class="cluster__gear" id="cluster-gear">P</div>
+
+      <div class="cluster__energy">
+        <div class="gauge">
+          <div class="gauge__fill" id="cluster-battery-bar"></div>
+        </div>
+        <div class="cluster__energy-text">
+          <p class="cluster__battery"><span id="cluster-battery">80</span> <small>%</small></p>
+          <p class="cluster__range"><span id="cluster-range">312</span> <small data-i18n="cluster.rangeUnit"></small></p>
+        </div>
+      </div>
+
+      <!-- turn-by-turn guidance, shown while navigating -->
+      <div class="cluster__guidance" id="cluster-guidance">
+        <span class="cluster__turn" id="cluster-turn"></span>
+        <div class="cluster__guidance-text">
+          <p class="cluster__distance" id="cluster-distance"></p>
+          <p class="cluster__street" id="cluster-street"></p>
+        </div>
+      </div>
+
+      <!-- track playing on the center screen -->
+      <div class="cluster__track" id="cluster-track">
+        <img class="cluster__track-cover" id="cluster-track-cover" alt="">
+        <div class="cluster__track-text">
+          <p class="cluster__track-title" id="cluster-track-title"></p>
+          <p class="cluster__track-artist" id="cluster-track-artist"></p>
+        </div>
+      </div>
+
+      <div class="welcome" aria-hidden="true"><div class="welcome__blend"></div></div>
+    </div>
+
+    <!-- ================= CENTER TOUCHSCREEN ================= -->
+    <div class="screen screen--center" id="center">
+      <img class="screen__wallpaper" data-wallpaper="center" src="assets/images/wallpapers/center-default.jpg" alt="">
+      <div class="screen__easy-bg"></div>
+
+      <header class="status-bar">
+        <div class="status-bar__icons">
+          <img src="assets/icons/data.svg" alt="">
+          <img src="assets/icons/wifi.svg" alt="">
+          <img src="assets/icons/smartphone.svg" alt="">
+        </div>
+        <div class="status-bar__clock">
+          <span class="status-bar__date" id="clock-date">06/07/2026</span>
+          <span class="status-bar__time" id="clock-time">09:47</span>
+        </div>
+      </header>
+
+      <main class="center__views">
+
+        <!-- HOME -->
+        <section class="view view--home is-active" data-view="home" data-mode="normal">
+          <div class="card card--map" id="home-map"></div>
+
+          <div class="card card--shortcuts">
+            <h2 class="card__title" data-i18n="home.shortcuts"></h2>
+            <div class="shortcuts">
+              <button class="shortcut" style="background-image:url(assets/images/shortcut-rugby.png)">
+                <span class="shortcut__label" data-i18n="shortcut.rugby"></span>
+                <img class="shortcut__app" src="assets/images/logo-maps.png" alt="">
+              </button>
+              <button class="shortcut" style="background-image:url(assets/images/shortcut-simon.png)">
+                <span class="shortcut__label" data-i18n="shortcut.simon"></span>
+                <img class="shortcut__app" src="assets/images/logo-whatsapp.png" alt="">
+              </button>
+              <button class="shortcut" style="background-image:url(assets/images/covers/a7x.jpg)" data-play="a7x">
+                <span class="shortcut__label" data-i18n="shortcut.a7x"></span>
+                <img class="shortcut__app" src="assets/images/logo-youtube.png" alt="">
+              </button>
+              <button class="shortcut shortcut--add" data-i18n-label="home.addShortcut">
+                <img src="assets/icons/add.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <!-- player drawn by js/media.js -->
+          <div class="card card--player" data-player="center"></div>
+        </section>
+
+        <!-- NAVIGATION -->
+        <section class="view view--navigation card" data-view="navigation" data-mode="normal">
+          <div class="nav-panel">
+            <h2 class="card__title" data-i18n="navigation.title"></h2>
+            <label class="search">
+              <input class="search__input" id="nav-search" type="text" autocomplete="off" data-i18n-placeholder="navigation.search">
+              <img src="assets/icons/search.svg" alt="">
+            </label>
+            <ul class="destinations" id="nav-destinations"></ul>
+            <button class="button-primary" id="nav-start">
+              <span id="nav-start-label" data-i18n="navigation.start"></span>
+              <img src="assets/icons/navigate.svg" alt="">
+            </button>
+          </div>
+          <div class="nav-map" id="nav-map"></div>
+        </section>
+
+        <!-- MEDIA -->
+        <section class="view view--media card" data-view="media" data-mode="normal">
+          <img class="media__backdrop" id="media-backdrop" alt="">
+          <div class="media__browse">
+            <h2 class="card__title" id="media-source-title"></h2>
+            <div class="media__shelves" id="media-shelves"></div>
+          </div>
+          <div class="media__sources">
+            <h2 class="card__title" data-i18n="media.sources"></h2>
+            <div class="media__source-list" id="media-sources"></div>
+          </div>
+          <div class="media__player" data-player="center"></div>
+        </section>
+
+        <!-- CAR -->
+        <section class="view view--car" data-view="car" data-mode="normal">
+          <div class="car-hero">
+            <img src="assets/images/car-side.png" alt="">
+          </div>
+          <div class="car-panel">
+            <div class="car-tile">
+              <p class="car-tile__label" data-i18n="car.doors"></p>
+              <p class="car-tile__value" id="car-doors-value"></p>
+              <button class="pill-button" id="car-doors-toggle"></button>
+            </div>
+            <div class="car-tile">
+              <p class="car-tile__label" data-i18n="car.climate"></p>
+              <p class="car-tile__value"><span id="car-temp">21</span>°C</p>
+              <div class="car-tile__actions">
+                <button class="pill-button pill-button--round" id="car-temp-down" data-i18n-label="car.cooler">−</button>
+                <button class="pill-button pill-button--round" id="car-temp-up" data-i18n-label="car.warmer">+</button>
+              </div>
+            </div>
+            <div class="car-tile">
+              <p class="car-tile__label" data-i18n="car.tyres"></p>
+              <p class="car-tile__value">2.4 bar</p>
+              <p class="car-tile__note" data-i18n="car.tyresOk"></p>
+            </div>
+            <div class="car-tile">
+              <p class="car-tile__label" data-i18n="car.battery"></p>
+              <p class="car-tile__value"><span id="car-battery">80</span>%</p>
+              <p class="car-tile__note"><span id="car-range">312</span> km</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- APPS -->
+        <section class="view view--apps card" data-view="apps" data-mode="normal">
+          <div class="apps-group">
+            <h2 class="apps-group__title" data-i18n="apps.favorites"></h2>
+            <div class="apps-grid apps-grid--favorites" id="apps-favorites"></div>
+          </div>
+          <div class="apps-group">
+            <h2 class="apps-group__title" data-i18n="apps.all"></h2>
+            <div class="apps-grid" id="apps-all"></div>
+          </div>
+        </section>
+
+        <!-- PROFILE (normal and easy) -->
+        <section class="view view--profile card" data-view="profile" data-mode="both">
+          <h2 class="card__title profile__title" data-i18n="profile.title"></h2>
+
+          <!-- settings -->
+          <div class="profile__panel profile__panel--settings" id="profile-settings">
+            <h3 class="profile__heading" data-i18n="profile.colour"></h3>
+            <div class="swatches" id="profile-swatches"></div>
+
+            <h3 class="profile__heading" data-i18n="profile.wallpaper"></h3>
+            <div class="wallpaper-picker" id="profile-wallpapers"></div>
+
+            <h3 class="profile__heading" data-i18n="profile.easyTitle"></h3>
+            <div class="easy-promo">
+              <div class="easy-promo__body">
+                <p class="easy-promo__text" data-i18n="profile.easyText"></p>
+                <button class="easy-promo__button" id="easy-toggle"></button>
+              </div>
+              <img class="easy-promo__preview" src="assets/images/thumbs/easy-preview.jpg" alt="">
+            </div>
+          </div>
+
+          <!-- profile picture picker (Figma "picselect") -->
+          <div class="profile__panel profile__panel--picker" id="profile-picker">
+            <h3 class="profile__heading" data-i18n="profile.chooseAvatar"></h3>
+            <div class="avatar-picker" id="profile-avatars"></div>
+            <div class="profile__actions">
+              <button class="dialog-button dialog-button--neutral" id="avatar-cancel" data-i18n="profile.cancel"></button>
+              <button class="dialog-button dialog-button--primary" id="avatar-validate" data-i18n="profile.validate"></button>
+            </div>
+          </div>
+
+          <div class="profile__identity">
+            <div class="avatar-ring">
+              <div class="avatar" id="profile-avatar"></div>
+              <button class="avatar__edit" id="profile-edit" data-i18n-label="profile.editAvatar">
+                <img src="assets/icons/edit.svg" alt="">
+              </button>
+            </div>
+            <p class="profile__name" data-i18n="profile.you"></p>
+          </div>
+        </section>
+
+        <!-- ===== EASY MODE SCREENS ===== -->
+
+        <!-- HOME easy -->
+        <section class="view view--home-easy" data-view="home" data-mode="easy">
+          <img class="easy-blob" src="assets/images/easy-blob.svg" alt="">
+          <div class="easy-map" id="home-easy-map"></div>
+          <div class="easy-shortcuts">
+            <button class="easy-shortcut" style="background-image:url(assets/images/shortcut-simon.png)">
+              <span class="shortcut__label" data-i18n="shortcut.simon"></span>
+              <img class="shortcut__app" src="assets/images/logo-whatsapp.png" alt="">
+            </button>
+            <button class="easy-shortcut" style="background-image:url(assets/images/covers/a7x.jpg)" data-play="a7x">
+              <span class="shortcut__label" data-i18n="shortcut.a7x"></span>
+              <img class="shortcut__app" src="assets/images/logo-youtube.png" alt="">
+            </button>
+            <button class="easy-shortcut easy-shortcut--add" data-i18n-label="home.addShortcut">
+              <img src="assets/icons/add.svg" alt="">
+            </button>
+          </div>
+          <div class="easy-player" data-player="center" data-variant="easy"></div>
+        </section>
+
+        <!-- CAR easy -->
+        <section class="view view--car-easy" data-view="car" data-mode="easy">
+          <div class="car-easy">
+            <div class="car-easy__floor"></div>
+            <img class="car-easy__outline" src="assets/images/car-easy-outline.svg" alt="">
+            <img class="car-easy__car" src="assets/images/car-easy.png" alt="">
+            <div class="car-easy__spots" id="car-easy-spots"></div>
+          </div>
+        </section>
+
+        <!-- APPS easy -->
+        <section class="view view--apps-easy" data-view="apps" data-mode="easy">
+          <div class="easy-apps" id="easy-apps"></div>
+        </section>
+
+      </main>
+
+      <div class="center__dock">
+        <button class="round-button round-button--voice" data-i18n-label="nav.voice">
+          <img src="assets/icons/mic.svg" alt="">
+        </button>
+
+        <nav class="navbar" id="navbar">
+          <span class="navbar__select" id="navbar-select"></span>
+          <button class="navbar__item is-active" data-target="home" data-i18n-label="nav.home"><img src="assets/icons/home.svg" alt=""></button>
+          <button class="navbar__item" data-target="navigation" data-i18n-label="nav.navigation"><img src="assets/icons/location.svg" alt=""></button>
+          <button class="navbar__item" data-target="media" data-i18n-label="nav.media"><img src="assets/icons/music.svg" alt=""></button>
+          <button class="navbar__item" data-target="car" data-i18n-label="nav.car"><img src="assets/icons/car.svg" alt=""></button>
+          <button class="navbar__item" data-target="apps" data-i18n-label="nav.apps"><img src="assets/icons/apps.svg" alt=""></button>
+        </nav>
+
+        <!-- easy mode: three big tabs, no bar -->
+        <nav class="navbar-easy" id="navbar-easy">
+          <button class="navbar-easy__item" data-target="home" data-i18n-label="nav.home"><img src="assets/icons/easy/home.svg" alt=""></button>
+          <button class="navbar-easy__item" data-target="car" data-i18n-label="nav.car"><img src="assets/icons/easy/car.svg" alt=""></button>
+          <button class="navbar-easy__item" data-target="apps" data-i18n-label="nav.apps"><img src="assets/icons/easy/apps.svg" alt=""></button>
+        </nav>
+
+        <button class="round-button round-button--profile" data-target="profile" data-i18n-label="nav.profile">
+          <span class="round-button__avatar" data-avatar></span>
+        </button>
+      </div>
+
+      <!-- Voice assistant panel (js/voice.js), the VPA itself is js/vpa.js -->
+      <div class="voice-panel" id="voice-panel" role="status">
+        <div id="voice-vpa"></div>
+        <div class="voice-panel__text">
+          <p class="voice-panel__heard" id="voice-heard"></p>
+          <p class="voice-panel__answer" id="voice-answer"></p>
+        </div>
+      </div>
+
+      <!-- Suggestion sent by the passenger (js/suggestion.js) -->
+      <div class="suggestion" id="suggestion" role="status">
+        <div class="suggestion__media"></div>
+        <div class="suggestion__text">
+          <p class="suggestion__label" data-i18n="suggestion.label"></p>
+          <p class="suggestion__title"></p>
+          <p class="suggestion__subtitle"></p>
+        </div>
+        <button class="suggestion__dismiss" data-i18n="suggestion.dismiss"></button>
+        <button class="suggestion__accept"></button>
+      </div>
+
+      <!-- Welcome sequence (Figma "WS"): shown until START is pressed -->
+      <div class="welcome welcome--center">
+        <div class="welcome__blend"></div>
+        <button class="welcome__start" id="welcome-start" data-i18n="welcome.start"></button>
+      </div>
+    </div>
+
+    <!-- ================= PASSENGER SCREEN (step f) ================= -->
+    <div class="screen screen--passenger" id="passenger">
+      <img class="screen__wallpaper" data-wallpaper="center" src="assets/images/wallpapers/center-default.jpg" alt="">
+      <div class="screen__easy-bg"></div>
+
+      <header class="passenger__header">
+        <h2 class="passenger__title" data-i18n="passenger.title"></h2>
+        <span class="passenger__clock" id="passenger-clock"></span>
+      </header>
+
+      <!-- own music -->
+      <div class="passenger__music">
+        <div class="card passenger__player">
+          <div data-player="passenger" data-variant="compact"></div>
+          <button class="send-button" id="passenger-send-track">
+            <img src="assets/icons/navigate.svg" alt="">
+            <span data-i18n="passenger.sendTrack"></span>
+          </button>
+        </div>
+        <div class="card passenger__library">
+          <h3 class="passenger__subtitle" data-i18n="passenger.library"></h3>
+          <div class="passenger__tracks" id="passenger-tracks"></div>
+        </div>
+      </div>
+
+      <!-- trip -->
+      <div class="card passenger__trip" id="passenger-trip">
+        <div class="trip trip--active">
+          <p class="passenger__subtitle" data-i18n="passenger.trip"></p>
+          <p class="trip__destination" id="trip-destination"></p>
+          <div class="trip__eta">
+            <span class="trip__eta-value" id="trip-eta"></span>
+            <span class="trip__eta-label" data-i18n="passenger.arrival"></span>
+          </div>
+          <div class="trip__facts">
+            <p><strong id="trip-remaining"></strong> <span data-i18n="passenger.kmLeft"></span></p>
+            <p><strong id="trip-minutes"></strong> <span data-i18n="passenger.minLeft"></span></p>
+          </div>
+          <div class="trip__bar"><div class="trip__bar-fill" id="trip-bar"></div></div>
+          <p class="trip__arrived" id="trip-arrived" data-i18n="passenger.arrived"></p>
+        </div>
+        <div class="trip trip--idle">
+          <p class="passenger__subtitle" data-i18n="passenger.whereTo"></p>
+          <ul class="trip__suggestions" id="passenger-destinations"></ul>
+        </div>
+      </div>
+
+      <div class="welcome" aria-hidden="true"><div class="welcome__blend"></div></div>
+    </div>
+
+    <!-- Steering wheel (in front of the cluster), drawn by js/cabin.js -->
+    <div class="cabin cabin--front" id="cabin-front"></div>
+
+  </div>
+</div>
+
+<!-- Portrait phones: one screen at a time (js/mobile.js) -->
+<nav class="mobile-nav" id="mobile-nav">
+  <p class="mobile-nav__hint" data-i18n="mobile.rotate"></p>
+  <svg class="mobile-map" viewBox="0 0 4400 2100" aria-hidden="true">
+    <path class="mobile-map__dash" d="M0 660 C700 590 1500 560 2200 560 C2900 560 3700 590 4400 660"/>
+    <circle class="mobile-map__wheel" cx="926" cy="1330" r="830"/>
+    <rect class="mobile-map__screen" data-screen="cluster" x="380" y="640" width="1092" height="401" rx="200"/>
+    <rect class="mobile-map__screen" data-screen="center" x="1900" y="600" width="1280" height="1125" rx="60"/>
+    <rect class="mobile-map__screen" data-screen="passenger" x="3330" y="700" width="1000" height="560" rx="60"/>
+  </svg>
+  <div class="mobile-tabs">
+    <button class="mobile-tab" data-screen="cluster" data-i18n="mobile.cluster"></button>
+    <button class="mobile-tab" data-screen="center" data-i18n="mobile.center"></button>
+    <button class="mobile-tab" data-screen="passenger" data-i18n="mobile.passenger"></button>
+  </div>
+</nav>
+
+<!-- Portfolio header (outside the car) -->
+<header class="portfolio-header">
+  <span class="portfolio-header__name" data-i18n="portfolio.name"></span>
+  <span class="portfolio-header__title" data-i18n="portfolio.title"></span>
+</header>
+
+<!-- Design notes: dots and card (js/notes-layer.js, content in js/notes.js) -->
+<div class="notes-layer" id="notes-layer"></div>
+<div class="note-card" id="note-card" role="dialog" aria-live="polite" hidden>
+  <div class="note-card__head">
+    <span class="note-card__number"></span>
+    <button class="note-card__close" data-i18n-label="notes.close">×</button>
+  </div>
+  <h2 class="note-card__title"></h2>
+  <p class="note-card__text"></p>
+  <div class="note-card__nav">
+    <button class="note-card__prev" data-i18n="notes.prev"></button>
+    <button class="note-card__next" data-i18n="notes.next"></button>
+  </div>
+</div>
+
+<!-- Portfolio controls (outside the car) -->
+<div class="toolbar">
+  <button class="toolbar__button toolbar__button--notes" id="notes-toggle" aria-pressed="false">
+    <span class="toolbar__dot">i</span>
+    <span data-i18n="notes.toggle"></span>
+  </button>
+  <button class="toolbar__button" id="simulation-toggle" aria-pressed="false">
+    <img src="assets/icons/pause.svg" alt="">
+    <span></span>
+  </button>
+  <p class="toolbar__hint" id="drive-hint"></p>
+</div>
+
+<script src="js/strings.js"></script>
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/state.js"></script>
+<script src="js/scale.js"></script>
+<script src="js/cabin.js"></script>
+<script src="js/road.js"></script>
+<script src="js/map.js"></script>
+<script src="js/media.js"></script>
+<script src="js/cluster.js"></script>
+<script src="js/simulation.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/center.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/trip.js"></script>
+<script src="js/suggestion.js"></script>
+<script src="js/passenger.js"></script>
+<script src="js/vpa.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/notes-layer.js"></script>
+<script src="js/mobile.js"></script>
+<script src="js/welcome.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

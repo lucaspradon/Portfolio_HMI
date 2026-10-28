@@ -1,0 +1,327 @@
+/* =========================================================
+   PASSENGER SCREEN (1000 × 560)
+   New screen, designed with the center screen's language:
+   glass cards, Montserrat, interface colour.
+   ========================================================= */
+
+.passenger__header {
+  position: absolute;
+  left: var(--space-m);
+  right: var(--space-m);
+  top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  line-height: normal;
+}
+
+.passenger__title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-light);
+}
+
+.passenger__clock {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+}
+
+.passenger__subtitle {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-light);
+  line-height: normal;
+}
+
+/* ---------- Music ---------- */
+
+.passenger__music {
+  position: absolute;
+  left: var(--space-m);
+  top: 80px;
+  bottom: var(--space-m);
+  width: 570px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.passenger__player {
+  height: 230px;
+  flex: none;
+  padding: var(--space-xs);
+}
+
+.player--compact {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: var(--space-xs);
+  height: 150px;
+  padding: 0;
+}
+
+.player--compact .player__album {
+  width: 150px;
+  height: 150px;
+}
+
+.player--compact .player__panel {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: normal;
+}
+
+.player--compact .player__title {
+  font-size: var(--font-size-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player--compact .player__artist {
+  font-size: var(--font-size-caption);
+  white-space: nowrap;
+}
+
+.player--compact .progress {
+  margin-top: 6px;
+}
+
+.player--compact .progress__times {
+  margin-top: 2px;
+  font-size: var(--font-size-tiny);
+}
+
+.player--compact .player__controls {
+  gap: var(--space-m);
+}
+
+.player--compact .icon-button {
+  width: 48px;
+  height: 48px;
+}
+
+.send-button {
+  float: right;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: 48px;
+  margin-top: var(--space-2xs);
+  padding: 0 var(--space-xs) 0 var(--space-2xs);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  transition: transform var(--duration-fast) var(--ease-standard),
+              opacity var(--duration-base) var(--ease-standard);
+}
+
+.send-button:active {
+  transform: scale(0.96);
+}
+
+.send-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.is-sent {
+  opacity: 0.6;
+}
+
+.passenger__library {
+  flex: 1;
+  padding: var(--space-xs);
+}
+
+.passenger__tracks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: var(--space-2xs);
+}
+
+.mini-track {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: normal;
+}
+
+.mini-track img {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 4px;
+  border-radius: var(--radius-button);
+  object-fit: cover;
+  outline: 3px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color var(--duration-base) var(--ease-standard);
+}
+
+.mini-track.is-current img {
+  outline-color: var(--color-accent);
+}
+
+.mini-track__title,
+.mini-track__artist {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-track__title {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.mini-track__artist {
+  font-size: var(--font-size-tiny);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Trip ---------- */
+
+.passenger__trip {
+  position: absolute;
+  right: var(--space-m);
+  top: 80px;
+  bottom: var(--space-m);
+  width: 340px;
+  padding: var(--space-xs) 24px;
+}
+
+.trip {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  line-height: normal;
+}
+
+.passenger__trip:not(.has-route) .trip--active,
+.passenger__trip.has-route .trip--idle {
+  display: none;
+}
+
+.trip__destination {
+  margin-top: var(--space-2xs);
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+}
+
+.trip__eta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  margin-top: var(--space-xs);
+}
+
+.trip__eta-value {
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.trip__eta-label,
+.trip__facts span {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+.trip__facts {
+  display: flex;
+  gap: var(--space-m);
+  margin-top: auto;
+}
+
+.trip__facts strong {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.trip__bar {
+  height: 8px;
+  margin-top: var(--space-xs);
+  border-radius: var(--radius-progress);
+  background: var(--color-surface-pill);
+  overflow: hidden;
+}
+
+.trip__bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--color-accent);
+  transition: width 1s linear;
+}
+
+.trip__arrived {
+  display: none;
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+}
+
+.is-arrived .trip__arrived {
+  display: block;
+}
+
+.trip__suggestions {
+  margin: var(--space-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trip__suggestion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: 64px;
+  padding: 0 var(--space-2xs);
+  border-radius: var(--radius-button);
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.trip__suggestion:hover {
+  background: var(--color-surface-tile);
+}
+
+.trip__suggestion > img {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+
+.trip__suggestion-name {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-caption);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trip__suggestion-send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.trip__suggestion-send img {
+  width: 36px;
+  height: 36px;
+}

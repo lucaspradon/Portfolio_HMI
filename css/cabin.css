@@ -1,0 +1,26 @@
+/* =========================================================
+   CABIN ILLUSTRATION (SVG drawn by js/cabin.js)
+   ========================================================= */
+
+.cabin {
+  position: absolute;
+  inset: 0;
+}
+
+.cabin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The steering wheel sits in front of the cluster
+   but must never catch clicks. */
+.cabin--front {
+  pointer-events: none;
+}
+
+/* rotation set by js/cabin.js; the short transition smooths the 50 ms steps */
+.steering-wheel {
+  transform-box: view-box;
+  transition: transform 80ms linear;
+}

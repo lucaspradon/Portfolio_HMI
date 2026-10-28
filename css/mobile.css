@@ -1,0 +1,154 @@
+/* =========================================================
+   MOBILE
+   - landscape: the whole cabin is scaled (js/scale.js), only
+     the portfolio controls get more compact
+   - portrait: one screen at a time + tabs and a mini map
+   ========================================================= */
+
+/* ---------- Tabs and mini map (portrait only) ---------- */
+
+.mobile-nav {
+  display: none;
+}
+
+.is-portrait .mobile-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--ui-gutter) calc(var(--ui-gutter) + env(safe-area-inset-bottom));
+}
+
+.mobile-nav__hint {
+  font-size: 12px;
+  color: var(--color-text-hint);
+}
+
+.mobile-map {
+  width: 132px;
+  height: 63px;
+  overflow: visible;
+}
+
+.mobile-map__dash,
+.mobile-map__wheel {
+  fill: none;
+  stroke: var(--ui-border);
+  stroke-width: 40;
+}
+
+.mobile-map__screen {
+  fill: var(--ui-surface);
+  stroke: var(--color-text-hint);
+  stroke-width: 40;
+  cursor: pointer;
+  transition: fill var(--duration-base) var(--ease-standard),
+              stroke var(--duration-base) var(--ease-standard);
+}
+
+.mobile-map__screen.is-active {
+  fill: var(--ui-note);
+  stroke: var(--ui-note);
+}
+
+.mobile-tabs {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  max-width: 420px;
+  padding: 4px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius-pill);
+  background: var(--ui-surface);
+  backdrop-filter: blur(var(--blur-header));
+  -webkit-backdrop-filter: blur(var(--blur-header));
+}
+
+.mobile-tab {
+  flex: 1;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  transition: background var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+
+.mobile-tab.is-active {
+  background: var(--color-text);
+  color: var(--cabin-bg);
+}
+
+/* ---------- Portrait: only the chosen screen ---------- */
+
+.is-portrait .cabin,
+.is-portrait .screen:not(.is-focused) {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-standard),
+              visibility 0s linear var(--duration-base);
+}
+
+.is-portrait .screen.is-focused {
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* the portfolio controls move to the top-right, under nothing */
+.is-portrait .toolbar {
+  left: auto;
+  right: var(--ui-gutter);
+  bottom: auto;
+  top: calc(var(--ui-gutter) - 7px + env(safe-area-inset-top));
+}
+
+.is-portrait .portfolio-header {
+  top: calc(var(--ui-gutter) + env(safe-area-inset-top));
+  flex-direction: column;
+  gap: 0;
+}
+
+.is-portrait .toolbar__hint {
+  display: none;
+}
+
+.is-portrait .toolbar__button span:last-child {
+  display: none;              /* icons only, to save room */
+}
+
+.is-portrait .toolbar__button {
+  padding: 0 8px;
+}
+
+/* ---------- Touch screens: no keyboard hint ---------- */
+
+@media (hover: none) {
+  .toolbar__hint {
+    display: none;
+  }
+}
+
+/* ---------- Small landscape screens (phones on their side) ---------- */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .portfolio-header {
+    top: 8px;
+    left: 12px;
+  }
+
+  .toolbar {
+    left: 12px;
+    bottom: 8px;
+  }
+}
+
+/* ---------- Notes card never wider than the screen ---------- */
+
+.note-card {
+  max-width: calc(100vw - 32px);
+}

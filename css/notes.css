@@ -1,0 +1,175 @@
+/* =========================================================
+   PORTFOLIO LAYER: header + design notes
+   Real size (not scaled with the cabin), outside the car.
+   ========================================================= */
+
+/* ---------- Header ---------- */
+
+.portfolio-header {
+  position: fixed;
+  left: var(--ui-gutter);
+  top: var(--ui-gutter);
+  z-index: 10;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  font-size: var(--ui-font-size);
+  pointer-events: none;
+}
+
+.portfolio-header__name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.portfolio-header__title {
+  color: var(--color-text-hint);
+}
+
+/* ---------- Toolbar button ---------- */
+
+.toolbar__dot {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ui-note);
+  color: var(--ui-note-text);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
+}
+
+.notes-on .toolbar__button--notes {
+  color: var(--color-text);
+  border-color: var(--ui-note);
+}
+
+/* ---------- Dots ---------- */
+
+.notes-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.note-dot {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ui-note);
+  color: var(--ui-note-text);
+  font-size: var(--ui-font-size);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard);
+}
+
+.note-dot[hidden] {
+  display: none;
+}
+
+.notes-on .note-dot {
+  opacity: 1;
+  transform: none;
+  animation: note-pulse 2.4s var(--ease-standard) infinite;
+}
+
+.notes-on .note-dot.is-active {
+  animation: none;
+  box-shadow: 0 0 0 5px rgba(255, 209, 102, 0.35), 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+body:not(.notes-on) .note-dot {
+  pointer-events: none;
+}
+
+@keyframes note-pulse {
+  50% { box-shadow: 0 0 0 8px rgba(255, 209, 102, 0.2), 0 2px 10px rgba(0, 0, 0, 0.4); }
+}
+
+/* ---------- Card ---------- */
+
+.note-card {
+  position: fixed;
+  z-index: 21;
+  width: 320px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--ui-border);
+  border-top: 3px solid var(--ui-note);
+  border-radius: 12px;
+  background: var(--ui-card);
+  backdrop-filter: blur(var(--blur-header));
+  -webkit-backdrop-filter: blur(var(--blur-header));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  line-height: 1.45;
+}
+
+.note-card[hidden] {
+  display: none;
+}
+
+.note-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--ui-note);
+  font-weight: var(--font-weight-semibold);
+}
+
+.note-card__close {
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-text-hint);
+}
+
+.note-card__close:hover {
+  color: var(--color-text);
+}
+
+.note-card__title {
+  margin-top: 6px;
+  font-size: var(--ui-font-size-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
+}
+
+.note-card__text {
+  margin-top: 6px;
+  font-size: var(--ui-font-size-text);
+  color: var(--color-text-muted);
+}
+
+.note-card__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.note-card__prev,
+.note-card__next {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.note-card__prev:hover,
+.note-card__next:hover {
+  color: var(--color-text);
+  background: var(--color-surface-tile);
+}
